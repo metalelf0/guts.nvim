@@ -86,6 +86,18 @@ All colors are sampled from [Berserk 1997 anime](https://www.imdb.com/title/tt03
   </tr>
 </table>
 
+## Variants
+
+Three variants offer increasing colour intensity while keeping the same overall mood:
+
+| Variant | Colorscheme name | Character |
+| --- | --- | --- |
+| base | `guts` | Original — gritty and muted |
+| whisper | `guts-whisper` | Slightly less muted (+20 % OKLCH chroma) |
+| scream | `guts-scream` | Noticeably more vivid (+45 % OKLCH chroma) |
+
+The chroma boost is applied in [OKLCH](https://bottosson.github.io/posts/oklab/) space — hue and lightness stay fixed, so every colour pops more without shifting in tone or washing out. Backgrounds are never boosted.
+
 ## Installation
 
 ```lua
@@ -93,7 +105,9 @@ vim.pack.add({
   "https://github.com/vossenwout/guts.nvim",
 })
 
-vim.cmd.colorscheme("guts")
+vim.cmd.colorscheme("guts")          -- original
+-- vim.cmd.colorscheme("guts-whisper")  -- slightly more vivid
+-- vim.cmd.colorscheme("guts-scream")   -- noticeably more vivid
 ```
 
 ## Extras

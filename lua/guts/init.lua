@@ -3,27 +3,51 @@ local M = {}
 -- All highlight groups from guts/highlights/ that get applied--
 local highlight_modules = { "editor", "fzf_lua", "lsp", "render_markdown", "treesitter" }
 
+-- Theme roles that are background colours — never chroma-boosted.
+local bg_roles = { bg = true, bg_alt = true }
+
+-- OKLCH chroma multiplier per variant.
+local variant_chroma = {
+	base    = 1.00,
+	whisper = 1.20,
+	scream  = 1.45,
+}
+
 function M.dev_reload()
+	-- Re-apply whichever variant is currently active.
+	local current = vim.g.colors_name or "guts"
 	for name, _ in pairs(package.loaded) do
 		if name:match("^guts") then
 			package.loaded[name] = nil
 		end
 	end
-
-	vim.cmd("colorscheme guts")
+	vim.cmd("colorscheme " .. current)
 end
 
 vim.api.nvim_create_user_command("GutsReload", M.dev_reload, { force = true })
 
-function M.load()
+function M.load(variant)
+	variant = variant or "base"
+	local factor = variant_chroma[variant] or 1.0
+
 	local theme = require("guts.theme")
+
+	-- Boost chroma of every non-background role.
+	if factor ~= 1.0 then
+		local color = require("guts.color")
+		for role, value in pairs(theme) do
+			if not bg_roles[role] and type(value) == "string" then
+				theme[role] = color.saturate(value, factor)
+			end
+		end
+	end
 
 	vim.cmd("highlight clear")
 	if vim.fn.exists("syntax_on") then
 		vim.cmd("syntax reset")
 	end
 
-	vim.g.colors_name = "guts"
+	vim.g.colors_name = variant == "base" and "guts" or ("guts-" .. variant)
 
 	local highlights = {}
 	for _, group_name in ipairs(highlight_modules) do
