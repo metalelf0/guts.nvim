@@ -30,16 +30,22 @@ function M.load(variant)
 	variant = variant or "base"
 	local factor = variant_chroma[variant] or 1.0
 
-	local theme = require("guts.theme")
+	-- Always read from the cached base theme without mutating it, so that
+	-- repeated :colorscheme calls don't compound the chroma boost.
+	local base_theme = require("guts.theme")
+	local theme = {}
 
-	-- Boost chroma of every non-background role.
 	if factor ~= 1.0 then
 		local color = require("guts.color")
-		for role, value in pairs(theme) do
+		for role, value in pairs(base_theme) do
 			if not bg_roles[role] and type(value) == "string" then
 				theme[role] = color.saturate(value, factor)
+			else
+				theme[role] = value
 			end
 		end
+	else
+		theme = base_theme
 	end
 
 	vim.cmd("highlight clear")
