@@ -1,0 +1,48 @@
+# guts-scream — OKLCH chroma ×1.45 over guts base
+
+# ANSI black
+palette = 0=#101113
+# ANSI red
+palette = 1=#a34936
+# ANSI green
+palette = 2=#778474
+# ANSI yellow
+palette = 3=#b9786d
+# ANSI blue
+palette = 4=#617aa2
+# ANSI magenta
+palette = 5=#994347
+# ANSI cyan
+palette = 6=#7f87a3
+# ANSI white
+palette = 7=#a09e8f
+
+# Bright ANSI black / gray
+palette = 8=#4c4055
+# Bright ANSI red
+palette = 9=#a34936
+# Bright ANSI green
+palette = 10=#95de9a
+# Bright ANSI yellow
+palette = 11=#e1ffda
+# Bright ANSI blue
+palette = 12=#7f87a3
+# Bright ANSI magenta
+palette = 13=#a07994
+# Bright ANSI cyan
+palette = 14=#82958d
+# Bright ANSI white
+palette = 15=#a9a798
+
+# Terminal background color
+background = #101113
+# Default text color
+foreground = #a09e8f
+# Cursor color
+cursor-color = #a09e8f
+# Text color under the cursor
+cursor-text = #101113
+# Background color for selected text
+selection-background = #4c4055
+# Foreground color for selected text
+selection-foreground = #e1ffda
